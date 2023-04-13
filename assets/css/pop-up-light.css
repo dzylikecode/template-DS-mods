@@ -1,0 +1,17 @@
+.pop-up {
+  color: #ed4f00;
+}
+
+.pop-up-container {
+  background-color: #f0f0f0;
+  border: #d0d0d0 1px solid;
+}
+
+.pop-up-container a {
+  color: #2382e6;
+}
+
+.pop-up-container a:hover {
+  color: #126dcf;
+  border-bottom: #126dcf solid 1px;
+}

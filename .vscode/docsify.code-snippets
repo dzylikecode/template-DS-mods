@@ -1,0 +1,69 @@
+{
+  // docsify
+  // - `$0`: the **final** cursor
+  // - `$1`: the first cursor
+  // - `$2`: the next cursor when type `tab`
+  //
+  // ${1:path}: `path` is a suggestion
+  // ["```${1:language}", "$2", "```", "$0"], each element occupy one line
+  "link pages": {
+    "scope": "markdown",
+    "prefix": "@linkp",
+    "body": ["<a class=\"Pages\" href=\"${1:path}\">${2:title}</a>", "$0"],
+    "description": "link to github pages"
+  },
+  "link blank pages": {
+    "scope": "markdown",
+    "prefix": "@linkpb",
+    "body": [
+      "<a class=\"Pages\" target=\"_blank\" href=\"${1:path}\">${2:title}</a>",
+      "$0"
+    ],
+    "description": "link to github pages, blank"
+  },
+  "link repos": {
+    "scope": "markdown",
+    "prefix": "@linkpg",
+    "body": ["<a class=\"Repos\" href=\"${1:path}\">${2:title}</a>", "$0"],
+    "description": "link to github repository"
+  },
+  "link blank repos": {
+    "scope": "markdown",
+    "prefix": "@linkpg",
+    "body": [
+      "<a class=\"Repos\" target=\"_blank\" href=\"${1:path}\">${2:title}</a>",
+      "$0"
+    ],
+    "description": "link to github repository, blank"
+  },
+  "code blog": {
+    "scope": "markdown",
+    "prefix": "@codeblog",
+    "body": ["```${1:language}", "$2", "```", "$0"],
+    "description": "link to code blog"
+  },
+  "highlight text": {
+    "scope": "markdown",
+    "prefix": "@text",
+    "body": ["==$1==$0"],
+    "description": "highlight text"
+  },
+  "reference": {
+    "scope": "markdown",
+    "prefix": "@ref",
+    "body": [" [^$1] $0"],
+    "description": "reference"
+  },
+  "note": {
+    "scope": "markdown",
+    "prefix": "@note",
+    "body": [" [-$1] $0"],
+    "description": "note"
+  },
+  "expose": {
+    "scope": "markdown",
+    "prefix": "@expose",
+    "body": ["", "<docs-expose>", "", "$1", "", "</docs-expose>", ""],
+    "description": "expose"
+  }
+}

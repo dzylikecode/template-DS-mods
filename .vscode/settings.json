@@ -1,0 +1,11 @@
+{
+  "dstutils.mapRules": [
+    {
+      "mdDir": "docs/",
+      "cacheDir": "assets/cache/",
+      "codeDir": "code/",
+      "exclude": ["README", "SUMMARY"],
+      "ext": ".lua"
+    }
+  ]
+}
