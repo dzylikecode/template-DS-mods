@@ -73,6 +73,10 @@
       window.gUserName = "dzylikecode";
       window.gReposName = "template-DS-mods";
       window.gBranchName = "master";
+    </script>
+    <!-- config 给后面使用 -->
+    <script src="./assets/js/config.js"></script>
+    <script>
       window.gCodeDocMaps = [
         {
           docs: "docs/",
@@ -81,20 +85,18 @@
           exclude: ["README", "SUMMARY"],
           global: ["GLOBAL"],
           ext: ".lua",
-        },
-      ];
-      window.gRemoteRepos = [
-        {
-          docs: "https://dzylikecode.github.io/game-DS-scripts/#/docs/DST/",
-          code: "https://github.com/dzylikecode/game-DS-scripts/blob/master/code/DST/",
-          cache:
-            "https://dzylikecode.github.io/game-DS-scripts/assets/cache/DST/",
-          ext: ".lua",
+          remoteRepos: [
+            {
+              docs: "https://dzylikecode.github.io/game-DS-scripts/#/docs/DST/",
+              code: "https://github.com/dzylikecode/game-DS-scripts/blob/master/code/DST/",
+              cache:
+                "https://dzylikecode.github.io/game-DS-scripts/assets/cache/DST/",
+              ext: ".lua",
+            },
+          ],
         },
       ];
     </script>
-    <!-- config 给后面使用 -->
-    <script src="./assets/js/config.js"></script>
     <!-- docsify 给后面使用 -->
     <script src="./assets/js/docsify.js"></script>
     <script src="./assets/js/anchor.js"></script>
