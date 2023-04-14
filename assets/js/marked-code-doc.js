@@ -49,7 +49,6 @@
    * @type {{docs:string, code:string, cache:string, exclude: string[], global: string[], ext:string}[]}
    */
   const codeDocMaps = window.gCodeDocMaps;
-  const remoteRepos = window.gRemoteRepos ?? [];
   // 引用 window.gMarked, 开始的时候是 null
 
   let isLoaded = false;
@@ -158,7 +157,7 @@
       const res = mapToVirtual(fileRoute);
       if (!res) return html;
       isLoaded = false;
-      const allRepos = [res.repos, ...remoteRepos];
+      const allRepos = [res.repos, ...res.remoteRepos];
       clearCache();
       fetchCache(res);
       const viewCode = `[:rocket: VIEW CODE](${getCodePath(
@@ -183,8 +182,8 @@
         for (const virtualName of docsCache.cur.deps) {
           for (const repos of allRepos) {
             const fullPath = getCachePath(repos, virtualName);
-            const res = await fetch(fullPath);
-            if (!res.ok) continue;
+            const res = await fetch(fullPath).catch((e) => console.log(e));
+            if (!res?.ok) continue;
             const obj = JSON.parse(await res.text());
             obj.repos = repos;
             docsCache.deps.push(obj);
@@ -194,8 +193,8 @@
         for (const virtualName of global) {
           for (const repos of allRepos) {
             const fullPath = getCachePath(repos, virtualName);
-            const res = await fetch(fullPath);
-            if (!res.ok) continue;
+            const res = await fetch(fullPath).catch((e) => console.log(e));
+            if (!res?.ok) continue;
             const obj = JSON.parse(await res.text());
             obj.repos = repos;
             docsCache.global.push(obj);
@@ -205,8 +204,8 @@
         for (const [asName, virtualName] of Object.entries(docsCache.cur.as)) {
           for (const repos of allRepos) {
             const fullPath = getCachePath(repos, virtualName);
-            const res = await fetch(fullPath);
-            if (!res.ok) continue;
+            const res = await fetch(fullPath).catch((e) => console.log(e));
+            if (!res?.ok) continue;
             const obj = JSON.parse(await res.text());
             obj.repos = repos;
             docsCache.as[asName] = obj;
@@ -219,8 +218,11 @@
     });
     hook.doneEach(function () {
       if (!container) container = new Container();
-      const popUps = document.querySelectorAll(".pop-up");
-      popUps.forEach(container.attachTo.bind(container));
+      handlePopup();
+      async function handlePopup() {
+        const popUps = document.querySelectorAll(".pop-up");
+        popUps.forEach(container.attachTo.bind(container));
+      }
     });
   }
 
@@ -229,8 +231,6 @@
   }
 
   function getVarContent(id) {
-    if (!isLoaded) return "Loading...<br> Try again";
-
     {
       const firstSplit = id.indexOf("-");
       if (firstSplit != -1) {
@@ -319,8 +319,6 @@
   }
 
   function getModContent(mName) {
-    if (!isLoaded) return "Loading...<br> Try again";
-
     {
       const m = docsCache.deps.find((m) => m.id == mName);
       if (m) {
@@ -378,6 +376,7 @@
   function createCacheFunc(func) {
     let cache = {};
     const cacheFunc = function (key) {
+      if (!isLoaded) return "Loading...<br> Try again";
       if (cache[key]) return cache[key];
       const res = func(key);
       cache[key] = res;
@@ -407,6 +406,7 @@
       virtualName,
       repos: { docs, code, cache, ext: match.ext },
       global: match.global,
+      remoteRepos: match.remoteRepos ?? [],
     };
 
     /**
